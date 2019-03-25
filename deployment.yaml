@@ -1,0 +1,48 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: ${CICD_IMAGE}
+  namespace: default
+spec:
+  replicas: 3
+  minReadySeconds: 10
+  selector:
+    app: ${CICD_IMAGE}
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: ${CICD_IMAGE}
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - preference:
+              matchExpressions:
+              - key: is_master
+                operator: In
+                values:
+                - "false"
+            weight: 100
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: type
+                operator: In
+                values:
+                - api
+      containers:
+      - image: ${CICD_IMAGE}:latest
+        imagePullPolicy: Always
+        name: ${CICD_IMAGE}
+        resources: {}
+        stdin: true
+        tty: true
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 30

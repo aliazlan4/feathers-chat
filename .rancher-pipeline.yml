@@ -1,0 +1,18 @@
+stages:
+- name: Test
+  steps:
+  - runScriptConfig:
+      image: node:latest
+      shellScript: |-
+        npm install
+        npm test
+- name: Publish image
+  steps:
+  - publishImageConfig:
+      dockerfilePath: ./Dockerfile
+      buildContext: .
+      tag: ${CICD_IMAGE}:latest
+- name: Deploy
+  steps:
+  - applyYamlConfig:
+      path: ./deployment.yaml
