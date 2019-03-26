@@ -43,3 +43,5 @@ spec:
       containers:
       - name: feathers-chat
         image: ${CICD_IMAGE}:${CICD_EXECUTION_SEQUENCE}
+        ports:
+        - containerPort: 3030
