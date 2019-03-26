@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: feathers-chat
   namespace: default
+  labels:
+    app: feathers-chat
 spec:
   replicas: 3
   minReadySeconds: 10
@@ -39,13 +41,5 @@ spec:
       imagePullSecrets:
       - name: pipeline-docker-registry
       containers:
-      - image: feathers-chat
-        imagePullPolicy: Always
-        name: feathers-chat
-        resources: {}
-        stdin: true
-        tty: true
-      dnsPolicy: ClusterFirst
-      restartPolicy: Always
-      schedulerName: default-scheduler
-      terminationGracePeriodSeconds: 30
+      - name: feathers-chat
+        image: ${CICD_IMAGE}:${CICD_EXECUTION_SEQUENCE}
