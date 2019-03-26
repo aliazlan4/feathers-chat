@@ -11,7 +11,7 @@ stages:
   - publishImageConfig:
       dockerfilePath: ./Dockerfile
       buildContext: .
-      tag: feathers-chat:${CICD_EXECUTION_SEQUENCE}
+      tag: feathers-chat
 - name: Deploy
   steps:
   - applyYamlConfig:
