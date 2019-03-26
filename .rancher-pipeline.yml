@@ -2,7 +2,7 @@ stages:
 - name: Test
   steps:
   - runScriptConfig:
-      image: node:latest
+      image: node:10
       shellScript: |-
         npm install
         npm test
@@ -11,7 +11,7 @@ stages:
   - publishImageConfig:
       dockerfilePath: ./Dockerfile
       buildContext: .
-      tag: feathers-chat:latest
+      tag: feathers-chat:${CICD_EXECUTION_SEQUENCE}
 - name: Deploy
   steps:
   - applyYamlConfig:
