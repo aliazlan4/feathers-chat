@@ -1,13 +1,13 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: ${CICD_IMAGE}
+  name: feathers-chat
   namespace: default
 spec:
   replicas: 3
   minReadySeconds: 10
   selector:
-    app: ${CICD_IMAGE}
+    app: feathers-chat
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -16,7 +16,7 @@ spec:
   template:
     metadata:
       labels:
-        app: ${CICD_IMAGE}
+        app: feathers-chat
     spec:
       affinity:
         nodeAffinity:
@@ -36,9 +36,9 @@ spec:
                 values:
                 - api
       containers:
-      - image: ${CICD_IMAGE}:latest
+      - image: feathers-chat:latest
         imagePullPolicy: Always
-        name: ${CICD_IMAGE}
+        name: feathers-chat
         resources: {}
         stdin: true
         tty: true
