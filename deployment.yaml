@@ -36,6 +36,8 @@ spec:
                 operator: In
                 values:
                 - api
+      imagePullSecrets:
+      - name: pipeline-docker-registry
       containers:
       - image: feathers-chat
         imagePullPolicy: Always
